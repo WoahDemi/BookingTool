@@ -9,9 +9,9 @@ const getAllBookings = async() =>{
     }
 }
 
-const getOneBooking = async (id) => {
+const getOneBooking = async (meetingroom_id) => {
     try {
-      const booking = await db.one(`SELECT * FROM bookings WHERE id = $1`, id);
+      const booking = await db.one(`SELECT * FROM bookings WHERE id = $1`, meetingroom_id);
       return booking;
     } catch (error) {
       console.log(error);

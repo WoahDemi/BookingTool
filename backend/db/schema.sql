@@ -4,6 +4,8 @@ CREATE DATABASE office;
 \c office;
 
 DROP TABLE IF EXISTS meetingrooms;
+DROP TABLE IF EXISTS bookings;
+
 CREATE TABLE meetingrooms(
     id SERIAL PRIMARY KEY, 
     name TEXT NOT NULL, 
@@ -11,9 +13,10 @@ CREATE TABLE meetingrooms(
     floor INT NOT NULL
 );
 
-DROP TABLE IF EXISTS bookings;
 CREATE TABLE bookings(
     id SERIAL PRIMARY KEY, 
-    name TEXT NOT NULL, 
-    floor INT NOT NULL
+    meetingroom_id INT REFERENCES meetingrooms(id),
+    meeting_name TEXT NOT NULL, 
+    starttime TIMESTAMP NOT NULL,
+    endtime TIMESTAMP NOT NULL
 );
