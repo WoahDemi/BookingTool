@@ -1,47 +1,53 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { withRouter, useHistory, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { apiURL } from "../util/apiURL";
-// import '../myFile.css';
+import moment from "moment";
 
 const API = apiURL();
 function BookingDetails() {
-  let history = useHistory();
   const { id } = useParams();
-  const bookmark = useSelector((state) => state.bookmarks[id])
+  const [booking, setBooking] = useState({});
 
-  const deleteBooking = async () => {
+  const cancelBooking = async () => {
     try {
-      await axios.delete(`${API}/bookmarks/${id}`);
+      await axios.delete(`${API}/bookings/${id}`);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
-  // useEffect(() => {
-  //   const getTheBookmark = async () => {
-  //     try {
-  //       const result = await axios.get(`${API}/bookmarks/${id}`);
-  //       setBookmark(result.data.payload);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
+  useEffect(() => {
+    const getTheBooking = async () => {
+      try {
+        const res = await axios.get(`${API}/bookings/${id}`);
+        setBooking(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getTheBooking();
+  }, [id]);
+
+  // const handleCancel = () => {
+  //   let confirmation = window.confirm("Cancel Booking?");
+  //   if (confirmation) {
+  //     cancelBooking();
   //   }
-  //   getTheBookmark();
-  // }, [id]);
-  
-  const handleDelete = async () => {
-    await deleteBooking();
-    history.push('/bookmarks');
+  // };
+
+  const handleCancel = async () => {
+    await cancelBooking();
   };
 
   return (
-    <article>
-      <a href={bookmark.url}>{bookmark.name}</a>
-      <p>{bookmark.url}</p>
-      <button onClick={handleDelete}>Delete</button>
-    </article>
+    <div>
+      <h1>{booking.name}</h1>
+      <li>Start: {moment(booking.starttime).format('MMMM Do YYYY  h:mm a')}</li>
+      <li>Start: {moment(booking.endtime).format('MMMM Do YYYY  h:mm a')}</li>
+      <li>{booking.floor}</li>
+      <button onClick={handleCancel}>Cancel</button>
+    </div>
   );
 }
 

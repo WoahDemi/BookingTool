@@ -1,9 +1,9 @@
-import RoomsList from "../Components/RoomsList";
+import MeetingRoomDetails from "../Components/MeetingRoomDetails";
 
 const Room = () => {
   return (
     <div>
-      <RoomsList />
+      <MeetingRoomDetails />
     </div>
   );
 };

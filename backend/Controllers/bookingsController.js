@@ -3,7 +3,7 @@ const bookings = express.Router();
 
 const {
     getAllBookings,
-    getOneBooking
+    getOneBooking,
 } = require("../Queries/bookings")
 
 
@@ -17,5 +17,6 @@ bookings.get("/", async (req, res) => {
     let booking = await getOneBooking(id);
     res.json(booking);
   });
+
 
   module.exports = bookings

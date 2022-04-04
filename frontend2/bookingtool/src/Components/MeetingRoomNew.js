@@ -6,83 +6,70 @@ import { apiURL } from "../util/apiURL.js";
 const API = apiURL();
 
 function MeetingRoomNewForm() {
-//   let history = useHistory();
 
-//   const addBookmark = async (newBookmark) => {
-//     console.log('ABOUT TO SEND THE REQUEST');
-//     try {
-//       await axios.post(`${API}/bookmarks`, newBookmark);
-//       console.log('SUCCESS, SENDING YOU TO INDEX PAGE')
-//       history.push(`/bookmarks`);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
+  const addMeetingRoom = async (newRoom) => {
+    try {
+      await axios.post(`${API}/bookings`, newRoom);
+      window.alert("Success! See you then")
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-//   const [bookmark, setBookmark] = useState({
-//     name: "",
-//     url: "",
-//     category: "",
-//     is_favorite: false,
-//   });
+  const [room, setRoom] = useState({
+    name: "",
+    floor: "",
+    capacity: "",
+  });
 
-//   const handleTextChange = (event) => {
-//     setBookmark({ ...bookmark, [event.target.id]: event.target.value });
-//   };
+  const handleTextChange = (event) => {
+    setRoom({ ...room, [event.target.id]: event.target.value });
+  };
 
-//   const handleCheckboxChange = () => {
-//     setBookmark({ ...bookmark, is_favorite: !bookmark.is_favorite });
-//   };
-
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     addBookmark(bookmark);
-//   };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    addMeetingRoom(room);
+    event.target.reset()
+  };
   
   return (
-      <div><h1>NEW FORM</h1></div>
-    // <div className="New">
-    //   <form onSubmit={handleSubmit}>
-    //     <label htmlFor="name">Name:</label>
-    //     <input
-    //       id="name"
-    //       value={bookmark.name}
-    //       type="text"
-    //       onChange={handleTextChange}
-    //       placeholder="Name of Website"
-    //       required
-    //     />
-    //     <label htmlFor="url">URL:</label>
-    //     <input
-    //       id="url"
-    //       type="text"
-    //       pattern="http[s]*://.+"
-    //       required
-    //       value={bookmark.url}
-    //       placeholder="http://"
-    //       onChange={handleTextChange}
-    //     />
-    //     <label htmlFor="category">Category:</label>
-    //     <input
-    //       id="category"
-    //       type="text"
-    //       name="category"
-    //       value={bookmark.category}
-    //       placeholder="educational, inspirational, ..."
-    //       onChange={handleTextChange}
-    //     />
-    //     <label htmlFor="is_favorite">Favorite:</label>
-    //     <input
-    //       id="is_favorite"
-    //       type="checkbox"
-    //       onChange={handleCheckboxChange}
-    //       checked={bookmark.is_favorite}
-    //     />
-
-    //     <br />
-    //     <input type="submit" />
-    //   </form>
-    // </div>
+    <div className="RoomForm">
+      <h1>Create a Room</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="name">Room Name:</label>
+        <input
+          id="name"
+          value={room.name}
+          type="text"
+          onChange={handleTextChange}
+          placeholder="Name of Room"
+          required
+        />
+        <label htmlFor="floor">Floor:</label>
+        <input
+          id="floor"
+          type="number"
+          min="1"
+          required
+          value={room.floor}
+          placeholder="Floor Number"
+          onChange={handleTextChange}
+        />
+        <label htmlFor="capacity">Capacity:</label>
+        <input
+          id="capacity"
+          type="number"
+          name="capacity"
+          step="1"
+          min="1"
+          value={room.capacity}
+          placeholder="Room Capacity"
+          onChange={handleTextChange}
+        />
+        <br />
+        <input type="submit" />
+      </form>
+    </div>
   );
 }
 
